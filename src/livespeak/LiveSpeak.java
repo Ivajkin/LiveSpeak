@@ -1,19 +1,24 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package livespeak;
+
+import processing.core.PApplet;
 
 /**
  *
- * @author Work
+ * @author Tim
  */
-public class LiveSpeak {
+@SuppressWarnings("serial")
+public class LiveSpeak extends PApplet {
 
+    @Override
+    public void setup() {
+    }
+    @Override
+    public void draw() {
+    }
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        PApplet.main(new String[]{livespeak.LiveSpeak.class.getName()});
     }
 }
