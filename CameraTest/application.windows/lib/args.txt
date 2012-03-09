@@ -1,3 +1,0 @@
-
-CameraTest
-CameraTest.jar,core.jar,JMyron.jar
