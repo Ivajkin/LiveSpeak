@@ -3,8 +3,10 @@ import java.awt.event.MouseAdapter;
 import javax.swing.SwingUtilities;
 import java.awt.event.MouseEvent;
 import java.awt.Point;
-import javax.swing.JPopupMenu;
-import javax.swing.ListSelectionModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import javax.swing.*;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -21,6 +23,18 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        openFrame = new JMenuItem("Открыть");
+        openFrame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main dlg = new Main();
+                dlg.setVisible(true);
+            }
+        });
+        popup = new JPopupMenu();
+        popup.add(openFrame);
+        popup.add("Добавить в группу");
+        
         lContacts.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -31,12 +45,11 @@ public class MainFrame extends javax.swing.JFrame {
                     int rowNumber = lContacts.locationToIndex(p);
                     ListSelectionModel model = lContacts.getSelectionModel();
                     model.setSelectionInterval(rowNumber, rowNumber);
-                    
-                    //JPopupMenu popup = ;
+                    popup.show(lContacts,p.x,p.y);
                 }
             }
         });
-}
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -155,6 +168,8 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
+    private JMenuItem openFrame;
+    private JPopupMenu popup;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAddContact;
     private javax.swing.JToggleButton bGroups;
