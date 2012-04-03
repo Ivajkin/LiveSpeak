@@ -1,3 +1,17 @@
+
+import java.awt.List;
+import javax.swing.JFileChooser;
+import javax.swing.JList;
+import javax.swing.ListModel;
+import javax.swing.event.ListDataListener;
+import java.awt.Color;
+import java.awt.FileDialog;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.*;
+import java.io.IOException;
+import javax.imageio.*;
+import java.io.*;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -10,8 +24,14 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    public Main() {
+    public Main(){
         initComponents();
+        lContacts = new JList();
+    }
+    public Main(String user) {
+        initComponents();
+        lContacts = new JList();
+        
     }
 
     /**
@@ -24,7 +44,8 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        ImageEdit = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -42,18 +63,30 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 434, Short.MAX_VALUE)
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SpeakIcons/1332846716_redact.png"))); // NOI18N
+        jButton1.setContentAreaFilled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout ImageEditLayout = new javax.swing.GroupLayout(ImageEdit);
+        ImageEdit.setLayout(ImageEditLayout);
+        ImageEditLayout.setHorizontalGroup(
+            ImageEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
+                .addGap(0, 369, Short.MAX_VALUE)
+                .addComponent(jButton1))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 303, Short.MAX_VALUE)
+        ImageEditLayout.setVerticalGroup(
+            ImageEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
+                .addGap(0, 280, Short.MAX_VALUE)
+                .addComponent(jButton1))
         );
 
-        jTabbedPane1.addTab("Окно переписки", jPanel1);
+        jTabbedPane1.addTab("Окно переписки", ImageEdit);
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -169,6 +202,17 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_bCursiveActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        FileDialog fileopen = new FileDialog(this,"Open file",FileDialog.LOAD);
+        //fileopen.set;
+        fileopen.setVisible(true);
+        ImageEdit = new ImagePanel(fileopen.getFile());
+        //ImageEdit.set
+        //imageView.drawImage(image, , WIDTH, );
+        repaint();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -210,13 +254,16 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
+    Graphics imageView;
+    Image image;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ImageEdit;
     private javax.swing.JToggleButton bBold;
     private javax.swing.JButton bCall;
     private javax.swing.JToggleButton bCursive;
     private javax.swing.JButton bVideoCall;
     private javax.swing.JComboBox cbFont;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
