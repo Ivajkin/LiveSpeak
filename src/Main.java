@@ -12,6 +12,8 @@ import java.awt.image.*;
 import java.io.IOException;
 import javax.imageio.*;
 import java.io.*;
+import javax.swing.text.html.ImageView;
+import org.jdesktop.swingx.JXImageView;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -26,14 +28,36 @@ public class Main extends javax.swing.JFrame {
      */
     public Main(){
         initComponents();
-        lContacts = new JList();
+        initializePanel();
     }
     public Main(String user) {
         initComponents();
-        lContacts = new JList();
-        
+        initializePanel();
     }
-
+    void initializePanel(){
+        lContacts = new JList();
+        imagePanel = new ImagePanel();
+        imagePanel.setSize(ImageEdit.getSize());
+        
+        javax.swing.GroupLayout ImageEditLayout = new javax.swing.GroupLayout(ImageEdit);
+        ImageEdit.setLayout(ImageEditLayout);
+        ImageEditLayout.setHorizontalGroup(
+            ImageEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
+                .addGap(0, 369, Short.MAX_VALUE))
+            .addGroup(ImageEditLayout.createSequentialGroup()
+                .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        ImageEditLayout.setVerticalGroup(
+            ImageEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
+                .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+        );
+        ImageEdit.setVisible(true);
+        imagePanel.setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,6 +70,7 @@ public class Main extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         ImageEdit = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -71,6 +96,17 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 274, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout ImageEditLayout = new javax.swing.GroupLayout(ImageEdit);
         ImageEdit.setLayout(ImageEditLayout);
         ImageEditLayout.setHorizontalGroup(
@@ -78,11 +114,13 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
                 .addGap(0, 369, Short.MAX_VALUE)
                 .addComponent(jButton1))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         ImageEditLayout.setVerticalGroup(
             ImageEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
-                .addGap(0, 280, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1))
         );
 
@@ -143,7 +181,7 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane3)
@@ -169,7 +207,7 @@ public class Main extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bCall, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bVideoCall, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -207,7 +245,9 @@ public class Main extends javax.swing.JFrame {
         FileDialog fileopen = new FileDialog(this,"Open file",FileDialog.LOAD);
         //fileopen.set;
         fileopen.setVisible(true);
-        ImageEdit = new ImagePanel(fileopen.getFile());
+        //if(fileopen.getFile() != null)
+        imagePanel.setImage(fileopen.getDirectory()+fileopen.getFile());
+        //ImageEdit = new JXImageView();
         //ImageEdit.set
         //imageView.drawImage(image, , WIDTH, );
         repaint();
@@ -254,8 +294,9 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
-    Graphics imageView;
-    Image image;
+    //Graphics imageView;
+    //Image image;
+    ImagePanel imagePanel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ImageEdit;
     private javax.swing.JToggleButton bBold;
@@ -264,6 +305,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton bVideoCall;
     private javax.swing.JComboBox cbFont;
     private javax.swing.JButton jButton1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
