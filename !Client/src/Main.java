@@ -12,6 +12,7 @@ import java.awt.image.*;
 import java.io.IOException;
 import javax.imageio.*;
 import java.io.*;
+import javax.swing.JOptionPane;
 import javax.swing.text.html.ImageView;
 import org.jdesktop.swingx.JXImageView;
 /*
@@ -34,29 +35,37 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         initializePanel();
     }
-    void initializePanel(){
+    private void initializePanel(){
         lContacts = new JList();
-        imagePanel = new ImagePanel();
-        imagePanel.setSize(ImageEdit.getSize());
+        imageView = new JXImageView();
         
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(imageView);
+        imageView.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 274, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout ImageEditLayout = new javax.swing.GroupLayout(ImageEdit);
         ImageEdit.setLayout(ImageEditLayout);
         ImageEditLayout.setHorizontalGroup(
             ImageEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
-                .addGap(0, 369, Short.MAX_VALUE))
-            .addGroup(ImageEditLayout.createSequentialGroup()
-                .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 369, Short.MAX_VALUE)
+                .addComponent(jButton1))
+            .addComponent(imageView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         ImageEditLayout.setVerticalGroup(
             ImageEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
-                .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                .addComponent(imageView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1))
         );
-        ImageEdit.setVisible(true);
-        imagePanel.setVisible(true);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,7 +79,6 @@ public class Main extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         ImageEdit = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -96,17 +104,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout ImageEditLayout = new javax.swing.GroupLayout(ImageEdit);
         ImageEdit.setLayout(ImageEditLayout);
         ImageEditLayout.setHorizontalGroup(
@@ -114,13 +111,11 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
                 .addGap(0, 369, Short.MAX_VALUE)
                 .addComponent(jButton1))
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         ImageEditLayout.setVerticalGroup(
             ImageEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(280, Short.MAX_VALUE)
                 .addComponent(jButton1))
         );
 
@@ -243,13 +238,12 @@ public class Main extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         FileDialog fileopen = new FileDialog(this,"Open file",FileDialog.LOAD);
-        //fileopen.set;
         fileopen.setVisible(true);
-        //if(fileopen.getFile() != null)
-        imagePanel.setImage(fileopen.getDirectory()+fileopen.getFile());
-        //ImageEdit = new JXImageView();
-        //ImageEdit.set
-        //imageView.drawImage(image, , WIDTH, );
+        try{
+            imageView.setImage(new File(fileopen.getDirectory()+fileopen.getFile()));
+        }catch(IOException ex){
+            JOptionPane.showMessageDialog(null,ex.toString());
+        }
         repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -296,6 +290,7 @@ public class Main extends javax.swing.JFrame {
     }
     //Graphics imageView;
     //Image image;
+    JXImageView imageView;
     ImagePanel imagePanel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ImageEdit;
@@ -305,7 +300,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton bVideoCall;
     private javax.swing.JComboBox cbFont;
     private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
