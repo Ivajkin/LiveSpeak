@@ -1,19 +1,10 @@
 
-import java.awt.List;
-import javax.swing.JFileChooser;
-import javax.swing.JList;
-import javax.swing.ListModel;
-import javax.swing.event.ListDataListener;
-import java.awt.Color;
 import java.awt.FileDialog;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.*;
+import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
-import javax.imageio.*;
-import java.io.*;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.text.html.ImageView;
 import org.jdesktop.swingx.JXImageView;
 /*
  * To change this template, choose Tools | Templates
@@ -38,7 +29,6 @@ public class Main extends javax.swing.JFrame {
     private void initializePanel(){
         lContacts = new JList();
         imageView = new JXImageView();
-        
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(imageView);
         imageView.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -66,6 +56,7 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1))
         );
+        postMessage("Ar-2", "22:01", "Shit happens, i think. Bad code, bad speak");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -80,7 +71,7 @@ public class Main extends javax.swing.JFrame {
         ImageEdit = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        chatArea = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         lContacts = new javax.swing.JList();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -121,9 +112,9 @@ public class Main extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Окно переписки", ImageEdit);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        chatArea.setColumns(20);
+        chatArea.setRows(5);
+        jScrollPane2.setViewportView(chatArea);
 
         jTabbedPane1.addTab("Интерактивная доска", jScrollPane2);
 
@@ -137,6 +128,11 @@ public class Main extends javax.swing.JFrame {
         jTextPane1.setEditable(false);
         jScrollPane3.setViewportView(jTextPane1);
 
+        teMessageEdit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                teMessageEditKeyPressed(evt);
+            }
+        });
         jScrollPane5.setViewportView(teMessageEdit);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -247,6 +243,15 @@ public class Main extends javax.swing.JFrame {
         repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void teMessageEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_teMessageEditKeyPressed
+        if(evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_ENTER){
+            postMessage("NickHere", "", teMessageEdit.getText());
+            teMessageEdit.setText("");
+        }
+    }//GEN-LAST:event_teMessageEditKeyPressed
+    private void postMessage(String from, String time, String message){
+        chatArea.append(from + " (" + time + "):\n" + message + "\n\n");
+    }
     /**
      * @param args the command line arguments
      */
@@ -299,6 +304,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JToggleButton bCursive;
     private javax.swing.JButton bVideoCall;
     private javax.swing.JComboBox cbFont;
+    private javax.swing.JTextArea chatArea;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -306,7 +312,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JList lContacts;
     private javax.swing.JEditorPane teMessageEdit;
