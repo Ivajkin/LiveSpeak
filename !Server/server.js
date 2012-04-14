@@ -9,7 +9,13 @@ var users = {};
 
 var app = require('express').createServer();
 
-app.get('/user?name=:name', function(req, res){
+
+app.get('/set_user?name=:name&address=:address', function(req, res) {
+	users[req.params.name] = req.params.address;
+	res.send('OK');
+});
+
+app.get('/user?name=:name', function(req, res) {
 
 	var user = users[req.params.name];
 	assert(user, 'There is no user "' + req.params.name + '"');
