@@ -1,23 +1,25 @@
-﻿var net = require('net');
+﻿function assert( /** Object */ expession, /** string */ message) {
+	if(!expession) {
+		throw message;
+	}
+}
 
-var server = net.createServer(function (socket) {
-	socket.write('Echo server\r\n');
-	socket.pipe(socket);
+// {'vasa' : '127.0.0.1',..}
+var users = {};
+
+var app = require('express').createServer();
+
+app.get('/user?name=:name', function(req, res){
+
+	var user = users[req.params.name];
+	assert(user, 'There is no user "' + req.params.name + '"');
+	res.send(
+				JSON.stringify(
+					user
+				)
+			);
 });
 
-server.listen(1337, '127.0.0.1');
+app.listen(3000);
 
-console.log('Сервер запущен. Порт: 1337');
-
-/*
-var http = require('http');
-
-http.createServer(function (req, res) {
-
-	res.writeHead(200, {'Content-Type': 'text/plain'});
-	res.end('Hello World\n');
-	
-}).listen(1337, '127.0.0.1');
-
-console.log('Server running at http://127.0.0.1:1337/');
-*/
+console.log('Сервер запущен. Порт: 3000');
