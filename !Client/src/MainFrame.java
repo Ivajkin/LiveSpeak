@@ -26,9 +26,11 @@ public class MainFrame extends javax.swing.JFrame {
         openFrame = new JMenuItem("Открыть");
         openFrame.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                Main dlg = new Main();
-                dlg.setVisible(true);
+            public void actionPerformed(ActionEvent e) {  
+                if(lContacts.getSelectedValues().length != 0){
+                    Main dlg = new Main(lContacts.getSelectedValues());
+                    dlg.setVisible(true);
+                }
             }
         });
         popup = new JPopupMenu();
@@ -42,9 +44,12 @@ public class MainFrame extends javax.swing.JFrame {
                 } 
                 else if (SwingUtilities.isRightMouseButton(e)) {
                     Point p = e.getPoint();
+                    
                     int rowNumber = lContacts.locationToIndex(p);
-                    ListSelectionModel model = lContacts.getSelectionModel();
-                    model.setSelectionInterval(rowNumber, rowNumber);
+                    if(!lContacts.isSelectedIndex(rowNumber)){
+                        ListSelectionModel model = lContacts.getSelectionModel();
+                        model.setSelectionInterval(rowNumber, rowNumber);
+                    }
                     popup.show(lContacts,p.x,p.y);
                 }
             }
