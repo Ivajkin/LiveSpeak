@@ -1,13 +1,11 @@
 
-import java.awt.FileDialog;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import org.jdesktop.swingx.JXImageView;
 import java.util.List;
-import javax.swing.DefaultListModel;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -34,33 +32,19 @@ public class Main extends javax.swing.JFrame {
         lContacts.setListData(users);
     }
     private void initializePanel(){
-        imageView = new JXImageView();
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(imageView);
-        imageView.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
-        );
-
+        imagePanel = new ImagePanel();
+        
         javax.swing.GroupLayout ImageEditLayout = new javax.swing.GroupLayout(ImageEdit);
         ImageEdit.setLayout(ImageEditLayout);
         ImageEditLayout.setHorizontalGroup(
             ImageEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
-                .addGap(0, 369, Short.MAX_VALUE)
-                .addComponent(jButton1))
-            .addComponent(imageView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         ImageEditLayout.setVerticalGroup(
             ImageEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
-                .addComponent(imageView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1))
+                .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
         );
         postMessage("Ar-2", "22:01", "Shit happens, i think. Bad code, bad speak");
     }
@@ -75,7 +59,6 @@ public class Main extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         ImageEdit = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         chatArea = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -93,27 +76,15 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SpeakIcons/1332846716_redact.png"))); // NOI18N
-        jButton1.setContentAreaFilled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout ImageEditLayout = new javax.swing.GroupLayout(ImageEdit);
         ImageEdit.setLayout(ImageEditLayout);
         ImageEditLayout.setHorizontalGroup(
             ImageEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
-                .addGap(0, 369, Short.MAX_VALUE)
-                .addComponent(jButton1))
+            .addGap(0, 434, Short.MAX_VALUE)
         );
         ImageEditLayout.setVerticalGroup(
             ImageEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImageEditLayout.createSequentialGroup()
-                .addContainerGap(280, Short.MAX_VALUE)
-                .addComponent(jButton1))
+            .addGap(0, 321, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Окно переписки", ImageEdit);
@@ -241,18 +212,6 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_bCursiveActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        FileDialog fileopen = new FileDialog(this,"Open file",FileDialog.LOAD);
-        fileopen.setVisible(true);
-        try{
-            imageView.setImage(new File(fileopen.getDirectory()+fileopen.getFile()));
-        }catch(IOException ex){
-            JOptionPane.showMessageDialog(null,ex.toString());
-        }
-        repaint();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void teMessageEditKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_teMessageEditKeyPressed
         if(evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_ENTER){
             postMessage("NickHere", "", teMessageEdit.getText());
@@ -305,7 +264,6 @@ public class Main extends javax.swing.JFrame {
     }
     //Graphics imageView;
     //Image image;
-    JXImageView imageView;
     ImagePanel imagePanel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ImageEdit;
@@ -315,7 +273,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton bVideoCall;
     private javax.swing.JComboBox cbFont;
     private javax.swing.JTextArea chatArea;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

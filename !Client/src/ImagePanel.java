@@ -19,31 +19,60 @@ import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import org.jdesktop.swingx.JXImageView;
 import java.awt.FileDialog;
-import java.io.File;
+import com.sun.pdfview.PDFPage;
+import com.sun.pdfview.PDFFile;
+import com.sun.pdfview.PagePanel;
+import java.awt.Dialog;
+import java.awt.Dimension;
+import java.awt.geom.Dimension2D;
+import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 
 public class ImagePanel extends javax.swing.JPanel{
     /**
      * Creates new form ImagePanel
      */
     public ImagePanel() {
-        initComponents();
-        imageView = new JXImageView();
-        imageView.setSize(this.getWidth(), this.getHeight());
-        //image = Toolkit.getDefaultToolkit().getImage("Duke_Blocks.gif");
+        Initialize();
     }
     public ImagePanel(String filename) {
-        initComponents();
-        imageView = new JXImageView();
-        imageView.setSize(this.getWidth(), this.getHeight());
-
+        
+        Initialize();
+    }
+    private void Initialize(){
+        //initComponents();
+        imageView = new PagePanel();
+        OpenFile = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        OpenFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SpeakIcons/1332846716_redact.png")));
+        OpenFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OpenFileActionPerformed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(imageView);       
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(OpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(OpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE))
+        );
     }
     public void setImage(String filename){
-        try{
-            imageView.setImage(new File(filename));
-        }catch(IOException ex){
-            JOptionPane.showMessageDialog(null,ex.toString());
-        }
-        repaint();
+
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,20 +84,61 @@ public class ImagePanel extends javax.swing.JPanel{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        OpenFile = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+
+        OpenFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SpeakIcons/1332846716_redact.png"))); // NOI18N
+        OpenFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OpenFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 413, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(OpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 375, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(OpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void OpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenFileActionPerformed
+        // TODO add your handling code here:
+        FileDialog fileopen = new FileDialog((Dialog)null,"Open file",FileDialog.LOAD);
+        fileopen.setVisible(true);
+        try{
+                    //load a pdf from a byte buffer
+            RandomAccessFile raf = new RandomAccessFile(
+                    new File(fileopen.getDirectory()+fileopen.getFile()), "r");
+            FileChannel channel = raf.getChannel();
+            ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY,
+                0, channel.size());
+            PDFFile pdffile = new PDFFile(buf);
+
+            PDFPage page = pdffile.getPage(0);
+            imageView.showPage(page);
+        }catch(IOException ex){
+            JOptionPane.showMessageDialog(null,ex.toString());
+        }
+        repaint();
+    }//GEN-LAST:event_OpenFileActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton OpenFile;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
     //---------------------------------------------------------------------
-    JXImageView imageView;
+    PagePanel imageView;
 }
