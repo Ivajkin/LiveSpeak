@@ -35,7 +35,7 @@ public class ImagePanel extends javax.swing.JPanel{
         initComponents();
         imageView = new JXImageView();
         imageView.setSize(this.getWidth(), this.getHeight());
-
+        setImage(filename);
     }
     public void setImage(String filename){
         try{
