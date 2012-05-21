@@ -1,30 +1,43 @@
-﻿function assert( /** Object */ expession, /** string */ message) {
+﻿//- Utilities -----------------------------+
+
+function assert( /** Object */ expession, /** string */ message) {
 	if(!expession) {
 		throw message;
 	}
 }
 
+//- Functions -----------------------------+
+var User = {
+	set: function(req, res) {
+		users[req.params.name] = req.params.address;
+		res.send('OK');
+	}
+	get: function(req, res) {
+
+		var user = users[req.params.name];
+		assert(user, 'There is no user "' + req.params.name + '"');
+		res.send(
+					JSON.stringify(
+						user
+					)
+				);
+	}
+}
+
+//- Variables -----------------------------+
+
 // {'vasa' : '127.0.0.1',..}
 var users = {};
 
-var app = require('express').createServer();
+//- Run server ----------------------------+
 
+var express = require('express');
+var app = express.createServer();
 
-app.get('/set_user?name=:name&address=:address', function(req, res) {
-	users[req.params.name] = req.params.address;
-	res.send('OK');
-});
+app.use(express.bodyParser());
 
-app.get('/user?name=:name', function(req, res) {
-
-	var user = users[req.params.name];
-	assert(user, 'There is no user "' + req.params.name + '"');
-	res.send(
-				JSON.stringify(
-					user
-				)
-			);
-});
+app.get('/setUser/:name/:address', User.set);
+app.get('/getUser/:name', User.get);
 
 app.listen(3000);
 
